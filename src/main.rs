@@ -36,7 +36,7 @@ fn main() {
             Err(_) => continue,
         };
 
-        if guess.is_alphabetic(){
+        if guess.is_alphabetic() {
             println!("You guessed: {}", guess);
             guess = guess.to_lowercase().to_string().chars().next().unwrap();
             word_to_guess = word_to_guess.to_lowercase();
@@ -56,12 +56,15 @@ fn main() {
                     println!("Current game state: {}", current_game_state);
 
                     found_chars_counter += 1;
-                },
-                None => continue
+                }
+                None => continue,
             }
 
-            if found_chars_counter == word_to_guess.len(){
-                println!("You beat the game! The word we look for is: {}", current_game_state);
+            if found_chars_counter == word_to_guess.len() {
+                println!(
+                    "You beat the game! The word we look for is: {}",
+                    current_game_state
+                );
                 std::process::exit(0);
             }
         } else {
