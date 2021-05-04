@@ -17,7 +17,7 @@ fn main() {
     let mut found_chars_counter = 0;
 
     for _ in 0..word_to_guess.len() {
-        current_game_state.push_str("_");
+        current_game_state.push('_');
     }
 
     println!("Current game state: {}", current_game_state);
@@ -38,7 +38,7 @@ fn main() {
 
         if guess.is_alphabetic(){
             println!("You guessed: {}", guess);
-            guess = guess.to_lowercase().to_string().chars().nth(0).unwrap();
+            guess = guess.to_lowercase().to_string().chars().next().unwrap();
             word_to_guess = word_to_guess.to_lowercase();
 
             match word_to_guess.find(guess) {
