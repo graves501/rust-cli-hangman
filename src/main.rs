@@ -1,6 +1,9 @@
 use std::io;
+use std::process::Command;
 
 fn main() {
+    clear_screen();
+
     println!("Put in a word to guess!");
 
     let mut word_to_guess = String::new();
@@ -10,6 +13,8 @@ fn main() {
         .expect("Failed to read input");
 
     word_to_guess = word_to_guess.trim().to_string();
+
+    clear_screen();
 
     println!("Guess a character!");
 
@@ -53,16 +58,16 @@ fn main() {
                     temp_word[i] = '_';
                     word_to_guess = temp_word.iter().collect();
 
-                    println!("Current game state: {}", current_game_state);
-
                     found_chars_counter += 1;
                 }
-                None => continue,
+                None => (),
             }
+
+            println!("Current game state: {}", current_game_state);
 
             if found_chars_counter == word_to_guess.len() {
                 println!(
-                    "You beat the game! The word we look for is: {}",
+                    "You beat the game! The word we are looking for is: {}",
                     current_game_state
                 );
                 std::process::exit(0);
@@ -71,4 +76,12 @@ fn main() {
             println!("{} is not a letter!", guess);
         }
     }
+}
+
+fn clear_screen() {
+    let output = Command::new("clear")
+        .output()
+        .unwrap_or_else(|e| panic!("failed to execute process: {}", e));
+
+    println!("{}", String::from_utf8_lossy(&output.stdout));
 }
