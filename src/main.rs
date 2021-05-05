@@ -12,7 +12,7 @@ fn main() {
         .read_line(&mut word_to_guess)
         .expect("Failed to read input");
 
-    word_to_guess = word_to_guess.trim().to_string();
+    word_to_guess = word_to_guess.to_lowercase().trim().to_string();
 
     clear_screen();
 
@@ -43,8 +43,13 @@ fn main() {
 
         if guess.is_alphabetic() {
             println!("You guessed: {}", guess);
-            guess = guess.to_lowercase().to_string().chars().next().unwrap();
-            word_to_guess = word_to_guess.to_lowercase();
+
+            guess = guess
+                .to_lowercase()
+                .to_string()
+                .chars()
+                .next()
+                .expect("At this point the guess should always be one character");
 
             match word_to_guess.find(guess) {
                 Some(i) => {
@@ -78,6 +83,7 @@ fn main() {
     }
 }
 
+// Src: https://github.com/davidbegin/clear-terminal
 fn clear_screen() {
     let output = Command::new("clear")
         .output()
